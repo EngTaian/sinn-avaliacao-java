@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"br.com.sinn"}, entityManagerFactoryRef = "entityManagerFactory")
-@PropertySource(value = "classpath:application.properties")
+@PropertySource(value = "classpath:application-test.properties")
 public class AvaliacaoEntrevistaJavaDBConfig {
 
 	@Autowired
