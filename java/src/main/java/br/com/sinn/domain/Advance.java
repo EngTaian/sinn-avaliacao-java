@@ -16,9 +16,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
 
-@Data
 @Entity
 public class Advance implements Serializable {
 
@@ -38,7 +36,7 @@ public class Advance implements Serializable {
 	private LocalDate totalReturnDate;
 	@JsonProperty("quitado")
 	@Column(name="QUITADO")
-	private Double settled;
+	private Boolean settled;
 	
 	@ManyToOne
 	@JoinTable(name="EMPLOYEE_ADVANCE", joinColumns=@JoinColumn(name="advance_id"), inverseJoinColumns = @JoinColumn(name="employee_id") )
@@ -52,7 +50,7 @@ public class Advance implements Serializable {
 	}
 
 	public Advance(Integer id, Double value, LocalDate advanceDate, LocalDate totalReturnDate,
-			Double settled, Employee employee) {
+			Boolean settled, Employee employee) {
 		super();
 		this.id = id;
 		this.value = value;
@@ -60,6 +58,87 @@ public class Advance implements Serializable {
 		this.totalReturnDate = totalReturnDate;
 		this.settled = settled;
 		this.employee = employee;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public LocalDate getAdvanceDate() {
+		return advanceDate;
+	}
+
+	public LocalDate getTotalReturnDate() {
+		return totalReturnDate;
+	}
+
+	public Boolean getSettled() {
+		return settled;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public InstallmentPlan getInstallmentPlan() {
+		return installmentPlan;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
+	public void setAdvanceDate(LocalDate advanceDate) {
+		this.advanceDate = advanceDate;
+	}
+
+	public void setTotalReturnDate(LocalDate totalReturnDate) {
+		this.totalReturnDate = totalReturnDate;
+	}
+
+	public void setSettled(Boolean settled) {
+		this.settled = settled;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public void setInstallmentPlan(InstallmentPlan installmentPlan) {
+		this.installmentPlan = installmentPlan;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Advance other = (Advance) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

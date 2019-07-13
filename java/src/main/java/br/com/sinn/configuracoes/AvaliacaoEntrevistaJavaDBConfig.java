@@ -20,8 +20,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import br.com.sinn.services.DBService;
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"br.com.sinn"}, entityManagerFactoryRef = "entityManagerFactory")
@@ -30,11 +28,6 @@ public class AvaliacaoEntrevistaJavaDBConfig {
 
 	@Autowired
 	private Environment environment;
-	
-	@Autowired
-	private DBService dbService;
-	
-	
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -80,7 +73,7 @@ public class AvaliacaoEntrevistaJavaDBConfig {
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
-
+		
 	private Properties hibernateProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
