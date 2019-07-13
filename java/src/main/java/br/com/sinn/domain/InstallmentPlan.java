@@ -14,14 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 @Data
 @Entity
-//@Table(name="TB_PLANO_PARCELAMENTO")
 public class InstallmentPlan implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +34,7 @@ public class InstallmentPlan implements Serializable{
 	@Column(name="VALOR_A_SER_DEVOLVIDO")
 	private Double valueToBeReturned;
 	@OneToMany(mappedBy = "installmentPlan", cascade = CascadeType.ALL)
-	List<Installments> installments = new ArrayList<>();
+	List<Installments> installments = new ArrayList<Installments>();
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="advance_id")
 	@MapsId	

@@ -20,14 +20,21 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import br.com.sinn.services.DBService;
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"br.com.sinn"}, entityManagerFactoryRef = "entityManagerFactory")
-@PropertySource(value = "classpath:application-test.properties")
+@PropertySource(value = "classpath:application.properties")
 public class AvaliacaoEntrevistaJavaDBConfig {
 
 	@Autowired
 	private Environment environment;
+	
+	@Autowired
+	private DBService dbService;
+	
+	
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -38,10 +45,10 @@ public class AvaliacaoEntrevistaJavaDBConfig {
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(this.hibernateProperties());
-
 		return em;
 	}
 
+	
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -82,5 +89,5 @@ public class AvaliacaoEntrevistaJavaDBConfig {
 		properties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql", "true"));
 		return properties;
 	}
-
+			
 }

@@ -11,13 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-//@Table(name="TB_PARCELAS")
 public class Installments implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -26,6 +24,8 @@ public class Installments implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(name="NUMERO_PARCELA")
+	private Integer numberInstallment;
 	@Column(name="VALOR_PARCELA")
 	private Double valueInstallment;
 	@Column(name="DATA_PAGAMENTO")
