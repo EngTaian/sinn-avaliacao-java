@@ -23,4 +23,5 @@ public class AvaliacaoEntrevistaJavaAppInitializer extends AbstractAnnotationCon
 	protected String[] getServletMappings() {
 		return new String[]{"/*"};
 	}
+	
 }

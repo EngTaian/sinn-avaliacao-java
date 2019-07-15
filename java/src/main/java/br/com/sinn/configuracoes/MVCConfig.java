@@ -75,6 +75,5 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 		resolver.setDefaultEncoding("utf-8");
 		
 		return resolver;
-	}
-	
+	}	
 }

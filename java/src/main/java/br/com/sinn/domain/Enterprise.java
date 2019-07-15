@@ -15,15 +15,15 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@Entity
+@Entity(name="EMPRESA")
 public class Enterprise implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID")
 	private Integer id;
-	
 	@JsonProperty("nome_empresa")
 	@Column(name="NOME_EMPRESA")
 	private String name;

@@ -36,8 +36,8 @@ public class ServiceEnterprise {
 
 	@Transactional
 	public Enterprise insert(Enterprise enterprise) {
-		enterprise.setId(null);
-		enterprise = repo.save(enterprise);
+		enterprise.setId(null);		
+		enterprise = repo.save(enterprise); 
 		return enterprise;
 	}
 
@@ -47,16 +47,25 @@ public class ServiceEnterprise {
 		newEnterprise = repo.save(newEnterprise);
 		return newEnterprise;
 	}
-
+	
 	public void delete(Enterprise enterprise) {
 		findById(enterprise.getId());
 		try {
-			repo.delete(enterprise.getId());
+			repo.delete(enterprise);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void deleteById(Integer id) {
+		findById(id);
+		try {
+			repo.delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+		
 	public Page<Enterprise> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);

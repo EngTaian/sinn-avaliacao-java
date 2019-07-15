@@ -43,7 +43,6 @@ public class ServiceEmployee {
 		return newEmployee;
 	}
 	
-	
 	public void delete(Employee employee) {
 		findById(employee.getId());
 		try {
@@ -52,6 +51,18 @@ public class ServiceEmployee {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteById(Integer id) {
+		findById(id);
+		try {
+			repo.delete(id);			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	public Page<Employee> findPage(Integer page, Integer linesPerPage, String direction, String order){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), order);
