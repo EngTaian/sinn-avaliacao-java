@@ -10,25 +10,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import br.com.sinn.configuracoes.AvaliacaoEntrevistaJavaAppInitializer;
 import br.com.sinn.controller.EnterpriseController;
 import br.com.sinn.domain.Enterprise;
 import br.com.sinn.services.ServiceEnterprise;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes= {AvaliacaoEntrevistaJavaAppInitializer.class,ServletConfig.class})
+@WebAppConfiguration
 public class EnterpriseControllerTest {
 	
 	private MockMvc mockMvc;
 	
-	@Mock
+	@Autowired
 	private ServiceEnterprise serviceEnterprise;
 	
 	@InjectMocks
@@ -37,7 +47,7 @@ public class EnterpriseControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders
+		this.mockMvc = MockMvcBuilders
 				.standaloneSetup(controller)
 				.build();
 	}

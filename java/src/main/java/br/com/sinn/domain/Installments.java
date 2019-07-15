@@ -12,13 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity(name="TB_PARCELAS")
 public class Installments implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	@Column(name = "NUMERO_PARCELA")
@@ -29,7 +29,7 @@ public class Installments implements Serializable {
 	private LocalDate paymentDate;
 
 	@ManyToOne
-	@JoinTable(name = "installmentPlan_id", joinColumns = @JoinColumn(name = "installments_id"), inverseJoinColumns = @JoinColumn(name = "installmentsPlan_id"))
+	@JoinTable(name = "TB_PLANO_PARCELAMENTO_TB_PARCELAS", joinColumns = @JoinColumn(name = "installments_id"), inverseJoinColumns = @JoinColumn(name = "installmentsPlan_id"))
 	private InstallmentPlan installmentPlan;
 
 	public Installments(Integer id, Integer numberInstallment, Double valueInstallment, LocalDate paymentDate,

@@ -2,8 +2,6 @@ package br.com.sinn.services;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,16 +32,17 @@ public class ServiceEnterprise {
 		return obj;
 	}
 
-	@Transactional
+	//@Transactional
 	public Enterprise insert(Enterprise enterprise) {
 		enterprise.setId(null);		
 		enterprise = repo.save(enterprise); 
 		return enterprise;
 	}
 
-	public Enterprise update(Enterprise enterprise) {
-		Enterprise newEnterprise = findById(enterprise.getId());
+	public Enterprise update(Enterprise enterprise, Integer id) {
+		Enterprise newEnterprise = findById(id);
 		updateData(newEnterprise, enterprise);
+		newEnterprise.setId(id);
 		newEnterprise = repo.save(newEnterprise);
 		return newEnterprise;
 	}

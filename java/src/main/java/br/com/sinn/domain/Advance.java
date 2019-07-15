@@ -17,13 +17,13 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@Entity
+@Entity(name="TB_ADIANTAMENTO")
 public class Advance implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@JsonProperty("valor")
 	@Column(name="VALOR")
@@ -39,7 +39,7 @@ public class Advance implements Serializable {
 	private Boolean settled;
 	
 	@ManyToOne
-	@JoinTable(name="EMPLOYEE_ADVANCE", joinColumns=@JoinColumn(name="advance_id"), inverseJoinColumns = @JoinColumn(name="employee_id") )
+	@JoinTable(name="TB_EMPREGADOS_TB_ADIANTAMENTO", joinColumns=@JoinColumn(name="advance_id"), inverseJoinColumns = @JoinColumn(name="employee_id") )
 	private Employee employee;
 	
 	@OneToOne(mappedBy = "advance", cascade = CascadeType.ALL)

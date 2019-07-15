@@ -36,9 +36,10 @@ public class ServiceAdvance {
 		return advance;
 	}
 	
-	public Advance update(Advance advance) {
-		Advance newAdvance = findById(advance.getId());
+	public Advance update(Advance advance, Integer id) {
+		Advance newAdvance = findById(id);
 		updateData(newAdvance, advance);
+		newAdvance.setId(id);
 		newAdvance=repo.save(newAdvance);
 		return newAdvance;
 	}
@@ -47,6 +48,15 @@ public class ServiceAdvance {
 		findById(advance.getId());
 		try {
 			repo.delete(advance);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteById(Integer id) {
+		findById(id);
+		try {
+			repo.delete(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

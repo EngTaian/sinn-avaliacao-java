@@ -17,13 +17,13 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
+@Entity(name="TB_PLANO_PARCELAMENTO")
 public class InstallmentPlan implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@JsonProperty("numero_de_parcelas")
 	@Column(name = "NUMERO_DE_PARCELAS")

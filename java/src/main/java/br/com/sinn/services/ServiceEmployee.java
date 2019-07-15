@@ -36,9 +36,10 @@ public class ServiceEmployee {
 		return obj;
 	}
 	
-	public Employee update(Employee employee) {
+	public Employee update(Employee employee, Integer id) {
 		Employee newEmployee = findById(employee.getId());
 		updateData(newEmployee, newEmployee);
+		newEmployee.setId(id);
 		newEmployee = repo.save(newEmployee);
 		return newEmployee;
 	}

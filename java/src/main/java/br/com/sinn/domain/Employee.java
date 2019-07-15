@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.sinn.domain.enums.JobRole;
 
 
-@Entity
+@Entity(name="TB_EMPREGADOS")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@JsonProperty("nome_empregado")
 	@Column(name="NOME")
@@ -46,7 +46,7 @@ public class Employee implements Serializable {
 	private List<Advance> advances = new ArrayList<Advance>();
 	
 	@ManyToOne
-	@JoinTable(name="ENTERPRISE_EMPLOYEE", joinColumns = @JoinColumn(name="employee_id"), inverseJoinColumns = @JoinColumn(name="enterprise_id"))
+	@JoinTable(name="TB_EMPRESAS_TB_EMPREGADOS", joinColumns = @JoinColumn(name="employee_id"), inverseJoinColumns = @JoinColumn(name="enterprise_id"))
 	private Enterprise enterprise;
 	
 	public Employee() {

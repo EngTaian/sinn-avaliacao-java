@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,9 +50,29 @@ public class AdvanceController {
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Advance> insert(Advance advance){
+	public ResponseEntity<Advance> insert(@RequestBody Advance advance){
 		Advance obj = service.insert(advance);
 		return ResponseEntity.ok().body(obj);
+	}
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Advance> update(@RequestBody Advance advance, @PathVariable Integer id){
+		Advance obj = service.update(advance, id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+		service.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Void> delete(@RequestBody Advance advance){
+		service.delete(advance);
+		return ResponseEntity.noContent().build();
 	}
 	
 }

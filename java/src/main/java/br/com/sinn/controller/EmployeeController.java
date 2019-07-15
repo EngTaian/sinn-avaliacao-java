@@ -55,8 +55,8 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, produces="application/json")
 	@ResponseBody
-	public ResponseEntity<Employee> update(@RequestBody Employee employee){
-		Employee obj = service.update(employee);
+	public ResponseEntity<Employee> update(@RequestBody Employee employee,@PathVariable Integer id){
+		Employee obj = service.update(employee, id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -67,7 +67,7 @@ public class EmployeeController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Void> deleteById(@PathVariable Integer id){
 		service.deleteById(id);

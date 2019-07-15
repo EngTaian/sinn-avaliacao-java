@@ -49,15 +49,15 @@ public class EnterpriseController {
 	
 	@RequestMapping(method=RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Enterprise> post(@RequestBody Enterprise enterprise){
+	public ResponseEntity<Enterprise> insert(@RequestBody Enterprise enterprise){
 		Enterprise obj = service.insert(enterprise);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces = "application/json")
 	@ResponseBody	
-	public ResponseEntity<Enterprise> put(@RequestBody Enterprise enterprise){
-		Enterprise obj = service.update(enterprise);
+	public ResponseEntity<Enterprise> put(@RequestBody Enterprise enterprise, @PathVariable Integer id){
+		Enterprise obj = service.update(enterprise, id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -68,7 +68,7 @@ public class EnterpriseController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(method=RequestMethod.DELETE, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Void> delete(@RequestBody Enterprise enterprise){
 		service.delete(enterprise);
