@@ -40,7 +40,7 @@ public class EmployeeController {
 	public ResponseEntity<Page<Employee>> findPage(			
 			@RequestParam(value="page", required=false, defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", required=false, defaultValue="24")Integer linesPerPage,
-			@RequestParam(value="orderBy", required=false, defaultValue="nome")String orderBy,
+			@RequestParam(value="orderBy", required=false, defaultValue="name")String orderBy,
 			@RequestParam(value="direction", required=false, defaultValue="ASC")String direction){
 		Page<Employee> obj = service.findPage(page, linesPerPage, direction, orderBy);
 		return ResponseEntity.ok().body(obj);

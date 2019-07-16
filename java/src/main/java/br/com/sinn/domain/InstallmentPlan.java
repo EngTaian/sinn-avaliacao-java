@@ -15,6 +15,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity(name="TB_PLANO_PARCELAMENTO")
@@ -23,7 +24,7 @@ public class InstallmentPlan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@JsonProperty("numero_de_parcelas")
 	@Column(name = "NUMERO_DE_PARCELAS")
@@ -31,8 +32,13 @@ public class InstallmentPlan implements Serializable {
 	@JsonProperty("valor_a_ser_devolvido")
 	@Column(name = "VALOR_A_SER_DEVOLVIDO")
 	private Double valueToBeReturned;
+	
+	@JsonIgnore
+	@JsonProperty("parcelas")
 	@OneToMany(mappedBy = "installmentPlan", cascade = CascadeType.ALL)
 	List<Installments> installments = new ArrayList<Installments>();
+		
+	@JsonProperty("adiantamento")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "advance_id")
 	@MapsId

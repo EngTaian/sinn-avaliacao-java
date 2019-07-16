@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -21,7 +22,7 @@ public class Enterprise implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@JsonProperty("nome_empresa")
 	@Column(name="NOME_EMPRESA")
@@ -33,6 +34,8 @@ public class Enterprise implements Serializable{
 	@Column(name="DONO_EMPRESA")
 	private String businessOwner;
 	
+	@JsonProperty("funcionarios")
+	@JsonBackReference
 	@OneToMany(mappedBy="enterprise", cascade = CascadeType.ALL)
 	List<Employee> employees = new ArrayList<Employee>();
 	

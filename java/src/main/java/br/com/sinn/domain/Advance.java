@@ -23,7 +23,7 @@ public class Advance implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@JsonProperty("valor")
 	@Column(name="VALOR")
@@ -38,10 +38,13 @@ public class Advance implements Serializable {
 	@Column(name="QUITADO")
 	private Boolean settled;
 	
+	
+	@JsonProperty("funcionario")
 	@ManyToOne
 	@JoinTable(name="TB_EMPREGADOS_TB_ADIANTAMENTO", joinColumns=@JoinColumn(name="advance_id"), inverseJoinColumns = @JoinColumn(name="employee_id") )
 	private Employee employee;
 	
+	@JsonProperty("planos_de_pagamento")
 	@OneToOne(mappedBy = "advance", cascade = CascadeType.ALL)
 	private InstallmentPlan installmentPlan;
 

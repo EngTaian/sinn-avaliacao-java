@@ -42,7 +42,7 @@ public class AdvanceController {
 	public ResponseEntity<Page<Advance>> findPage(
 			@RequestParam(value="page", required=false, defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", required=false, defaultValue="24")Integer linesPerPage,
-			@RequestParam(value="orderBy", required=false, defaultValue="nome") String orderBy,
+			@RequestParam(value="orderBy", required=false, defaultValue="id") String orderBy,
 			@RequestParam(value="direction", required=false, defaultValue="ASC") String direction){
 		Page<Advance> obj = service.findPage(page, linesPerPage, direction, orderBy);
 		return ResponseEntity.ok().body(obj);

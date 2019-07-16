@@ -26,7 +26,7 @@ public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@JsonProperty("nome_empregado")
 	@Column(name="NOME")
@@ -41,10 +41,12 @@ public class Employee implements Serializable {
 	@Column(name="SALARIO")
 	private Double salary;
 	
+	@JsonProperty("adiantamento")
 	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<Advance> advances = new ArrayList<Advance>();
 	
+	@JsonProperty("empresa")
 	@ManyToOne
 	@JoinTable(name="TB_EMPRESAS_TB_EMPREGADOS", joinColumns = @JoinColumn(name="employee_id"), inverseJoinColumns = @JoinColumn(name="enterprise_id"))
 	private Enterprise enterprise;

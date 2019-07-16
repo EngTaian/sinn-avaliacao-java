@@ -12,13 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity(name="TB_PARCELAS")
 public class Installments implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name = "NUMERO_PARCELA")
@@ -27,7 +29,9 @@ public class Installments implements Serializable {
 	private Double valueInstallment;
 	@Column(name = "DATA_PAGAMENTO")
 	private LocalDate paymentDate;
+	
 
+	@JsonProperty("plano_de_pagamento")
 	@ManyToOne
 	@JoinTable(name = "TB_PLANO_PARCELAMENTO_TB_PARCELAS", joinColumns = @JoinColumn(name = "installments_id"), inverseJoinColumns = @JoinColumn(name = "installmentsPlan_id"))
 	private InstallmentPlan installmentPlan;

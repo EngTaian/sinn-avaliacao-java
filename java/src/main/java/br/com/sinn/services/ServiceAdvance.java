@@ -12,61 +12,64 @@ import org.springframework.stereotype.Service;
 
 import br.com.sinn.domain.Advance;
 import br.com.sinn.repository.RepositoryAdvance;
+import br.com.sinn.services.exception.ObjectNotFoundException;
 
 @Service
 public class ServiceAdvance {
-	
+
 	@Autowired
 	RepositoryAdvance repo;
-	
-	public List<Advance> findAll(){
+
+	public List<Advance> findAll() {
 		List<Advance> obj = repo.findAll();
 		return obj;
 	}
-	
+
 	public Advance findById(Integer id) {
 		Advance advance = repo.findOne(id);
+		if (advance == null)
+			throw new ObjectNotFoundException("Advance id " + id + " not found! " + Advance.class.getName());
 		return advance;
 	}
-	
+
 	@Transactional
 	public Advance insert(Advance advance) {
 		advance.setId(null);
-		advance = repo.save(advance);
+		advance = repo.saveAndFlush(advance);
 		return advance;
 	}
-	
+
 	public Advance update(Advance advance, Integer id) {
 		Advance newAdvance = findById(id);
 		updateData(newAdvance, advance);
 		newAdvance.setId(id);
-		newAdvance=repo.save(newAdvance);
+		newAdvance = repo.saveAndFlush(newAdvance);
 		return newAdvance;
 	}
-	
+
 	public void delete(Advance advance) {
 		findById(advance.getId());
 		try {
 			repo.delete(advance);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteById(Integer id) {
 		findById(id);
 		try {
 			repo.delete(id);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public Page<Advance> findPage(Integer page, Integer linesPerPage, String direction, String order){
+
+	public Page<Advance> findPage(Integer page, Integer linesPerPage, String direction, String order) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), order);
 		return repo.findAll(pageRequest);
 	}
-	
+
 	private void updateData(Advance newAdvance, Advance advance) {
 		newAdvance.setAdvanceDate(advance.getAdvanceDate());
 		newAdvance.setEmployee(advance.getEmployee());

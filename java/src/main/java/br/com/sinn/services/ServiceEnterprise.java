@@ -2,6 +2,8 @@ package br.com.sinn.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,29 +12,28 @@ import org.springframework.stereotype.Service;
 
 import br.com.sinn.domain.Enterprise;
 import br.com.sinn.repository.RepositoryEnterprise;
+import br.com.sinn.services.exception.ObjectNotFoundException;
 
 @Service
 public class ServiceEnterprise {
 
 	@Autowired
 	RepositoryEnterprise repo;
-
+	
 	public List<Enterprise> findAll() {
 		List<Enterprise> obj = repo.findAll();
 		return obj;
 	}
 
 	public Enterprise findById(Integer id) {
-		Enterprise obj = null;
-		try {
-			obj = repo.findOne(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Enterprise obj = repo.findOne(id);
+		if(obj == null)
+			throw new ObjectNotFoundException("Enterprise id "+ id + " not found! " + Enterprise.class.getName());
+		
 		return obj;
 	}
 
-	//@Transactional
+	@Transactional
 	public Enterprise insert(Enterprise enterprise) {
 		enterprise.setId(null);		
 		enterprise = repo.save(enterprise); 

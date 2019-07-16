@@ -13,6 +13,7 @@ import br.com.sinn.domain.InstallmentPlan;
 import br.com.sinn.domain.Installments;
 import br.com.sinn.repository.RepositoryInstallmentPlan;
 import br.com.sinn.repository.RepositoryInstallments;
+import br.com.sinn.services.exception.ObjectNotFoundException;
 
 @Service
 public class ServiceInstallmentPlan {
@@ -30,10 +31,12 @@ public class ServiceInstallmentPlan {
 
 	public InstallmentPlan findById(Integer id) {
 		InstallmentPlan installmentPlan = repo.findOne(id);
+		if (installmentPlan == null)
+			throw new ObjectNotFoundException("InstallmentPlan id " + id + " not found! " + InstallmentPlan.class.getName());
 		return installmentPlan;
 	}
-	
-	public Page<InstallmentPlan> findPage(Integer page, Integer linesPerPage, String direction, String order){
+
+	public Page<InstallmentPlan> findPage(Integer page, Integer linesPerPage, String direction, String order) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), order);
 		return repo.findAll(pageRequest);
 	}
@@ -64,7 +67,7 @@ public class ServiceInstallmentPlan {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteById(Integer id) {
 		findById(id);
 		try {

@@ -34,7 +34,7 @@ public class EnterpriseController {
 	public ResponseEntity<Page<Enterprise>> getPageable(
 			@RequestParam(value="page", required=false, defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", required=false, defaultValue="24")Integer linesPerPage,
-			@RequestParam(value="orderBy", required=false, defaultValue="nome")String orderBy,
+			@RequestParam(value="orderBy", required=false, defaultValue="name")String orderBy,
 			@RequestParam(value="direction", required=false, defaultValue="ASC")String direction){
 		Page<Enterprise> obj = service.findPage(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(obj);
