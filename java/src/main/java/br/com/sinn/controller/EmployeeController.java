@@ -2,6 +2,8 @@ package br.com.sinn.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sinn.domain.Employee;
+import br.com.sinn.domain.dto.EmployeeDTO;
 import br.com.sinn.services.ServiceEmployee;
 
 @RestController
@@ -47,7 +50,7 @@ public class EmployeeController {
 	}
 	@RequestMapping(method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public ResponseEntity<Employee> insert(@RequestBody Employee employee){
+	public ResponseEntity<Employee> insert(@Valid @RequestBody Employee employee){
 		Employee obj = service.insert(employee);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -55,8 +58,9 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, produces="application/json")
 	@ResponseBody
-	public ResponseEntity<Employee> update(@RequestBody Employee employee,@PathVariable Integer id){
-		Employee obj = service.update(employee, id);
+	public ResponseEntity<Employee> update(@RequestBody EmployeeDTO employee,@PathVariable Integer id){
+		Employee obj = service.fromDTO(employee);
+		obj = service.update(obj, id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

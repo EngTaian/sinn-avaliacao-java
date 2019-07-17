@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.sinn.domain.Employee;
+import br.com.sinn.domain.dto.EmployeeDTO;
+import br.com.sinn.domain.enums.JobRole;
 import br.com.sinn.repository.RepositoryEmployee;
 import br.com.sinn.services.exception.ObjectNotFoundException;
 
@@ -68,6 +70,10 @@ public class ServiceEmployee {
 	public Page<Employee> findPage(Integer page, Integer linesPerPage, String direction, String order) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), order);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Employee fromDTO(EmployeeDTO obj) {
+		return new Employee(obj.getId(), obj.getName(), null, JobRole.toEnum(obj.getJobRole()), obj.getSalary(), obj.getEnterprise());
 	}
 
 	private void updateData(Employee newEmployee, Employee employee) {

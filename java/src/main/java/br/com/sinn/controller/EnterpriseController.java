@@ -2,6 +2,8 @@ package br.com.sinn.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sinn.domain.Enterprise;
+import br.com.sinn.domain.dto.EnterpriseDTO;
 import br.com.sinn.services.ServiceEnterprise;
 
 @RestController
@@ -49,15 +52,16 @@ public class EnterpriseController {
 	
 	@RequestMapping(method=RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Enterprise> insert(@RequestBody Enterprise enterprise){
+	public ResponseEntity<Enterprise> insert(@Valid @RequestBody Enterprise enterprise){
 		Enterprise obj = service.insert(enterprise);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces = "application/json")
 	@ResponseBody	
-	public ResponseEntity<Enterprise> put(@RequestBody Enterprise enterprise, @PathVariable Integer id){
-		Enterprise obj = service.update(enterprise, id);
+	public ResponseEntity<Enterprise> put(@Valid @RequestBody EnterpriseDTO enterprise, @PathVariable Integer id){
+		Enterprise obj = service.fromDTO(enterprise); 
+		obj = service.update(obj, id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

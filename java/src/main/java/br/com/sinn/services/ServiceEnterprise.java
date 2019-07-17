@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.sinn.domain.Enterprise;
+import br.com.sinn.domain.dto.EnterpriseDTO;
 import br.com.sinn.repository.RepositoryEnterprise;
 import br.com.sinn.services.exception.ObjectNotFoundException;
 
@@ -70,7 +71,11 @@ public class ServiceEnterprise {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-
+	
+	public Enterprise fromDTO(EnterpriseDTO obj) {
+		return new Enterprise(obj.getId(), obj.getName(), null, obj.getBusinessOwner());
+	}
+	
 	private void updateData(Enterprise newEnterprise, Enterprise enterprise) {
 		newEnterprise.setName(enterprise.getName());
 		newEnterprise.setBusinessOwner(enterprise.getBusinessOwner());

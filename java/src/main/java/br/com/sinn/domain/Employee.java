@@ -19,9 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.sinn.domain.enums.JobRole;
+import br.com.sinn.services.validation.EmployeeInsert;
 
 
 @Entity(name="TB_EMPREGADOS")
+@EmployeeInsert
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
