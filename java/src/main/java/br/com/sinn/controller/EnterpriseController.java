@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sinn.domain.Enterprise;
 import br.com.sinn.domain.dto.EnterpriseDTO;
+import br.com.sinn.domain.dto.EnterpriseNewDTO;
 import br.com.sinn.services.ServiceEnterprise;
 
 @RestController
@@ -52,15 +53,16 @@ public class EnterpriseController {
 	
 	@RequestMapping(method=RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Enterprise> insert(@Valid @RequestBody Enterprise enterprise){
-		Enterprise obj = service.insert(enterprise);
+	public ResponseEntity<Enterprise> insert(@Valid @RequestBody EnterpriseNewDTO enterprise){
+		Enterprise obj = service.fromNewDTO(enterprise);
+		obj = service.insert(obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces = "application/json")
 	@ResponseBody	
 	public ResponseEntity<Enterprise> put(@Valid @RequestBody EnterpriseDTO enterprise, @PathVariable Integer id){
-		Enterprise obj = service.fromDTO(enterprise); 
+		Enterprise obj = service.fromDTO(enterprise, id); 
 		obj = service.update(obj, id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -78,5 +80,4 @@ public class EnterpriseController {
 		service.delete(enterprise);
 		return ResponseEntity.noContent().build();
 	}
-	
 }

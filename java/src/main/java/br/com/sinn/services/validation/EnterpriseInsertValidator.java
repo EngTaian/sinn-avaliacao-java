@@ -9,14 +9,15 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.sinn.domain.Enterprise;
+import br.com.sinn.domain.dto.EnterpriseNewDTO;
 import br.com.sinn.repository.RepositoryEnterprise;
 import br.com.sinn.services.exception.FieldMessage;
 import br.com.sinn.services.utils.BR;
 
-public class EnterpriseInsertValidator implements ConstraintValidator<EnterpriseInsert, Enterprise>{
+public class EnterpriseInsertValidator implements ConstraintValidator<EnterpriseInsert, EnterpriseNewDTO>{
 	
 	@Autowired
-	private RepositoryEnterprise repo;
+	RepositoryEnterprise repo;
 	
 	@Override
 	public void initialize(EnterpriseInsert constraintAnnotation) {
@@ -25,17 +26,17 @@ public class EnterpriseInsertValidator implements ConstraintValidator<Enterprise
 	}
 
 	@Override
-	public boolean isValid(Enterprise obj , ConstraintValidatorContext context) {
+	public boolean isValid(EnterpriseNewDTO obj , ConstraintValidatorContext context) {
 		
 		List<FieldMessage> list = new ArrayList<>();
-		
+	
 		if(!BR.isValidTin(obj.getCnpj())) {
 			list.add(new FieldMessage("cnpj_empresa", "CNPJ not valid"));
 		}
 		
 		Enterprise aux = repo.findByCnpj(obj.getCnpj());
 		if(aux != null) {
-			list.add(new FieldMessage("cnpj_empresa", "CNPJ exists!"));
+			list.add(new FieldMessage("cnpj_empresa", "CNPJ existent!"));
 		}
 		
 		for(FieldMessage e : list) {

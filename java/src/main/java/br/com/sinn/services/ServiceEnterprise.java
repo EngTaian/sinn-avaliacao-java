@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.sinn.domain.Enterprise;
 import br.com.sinn.domain.dto.EnterpriseDTO;
+import br.com.sinn.domain.dto.EnterpriseNewDTO;
 import br.com.sinn.repository.RepositoryEnterprise;
 import br.com.sinn.services.exception.ObjectNotFoundException;
 
@@ -27,10 +28,12 @@ public class ServiceEnterprise {
 	}
 
 	public Enterprise findById(Integer id) {
-		Enterprise obj = repo.findOne(id);
-		if(obj == null)
+		Enterprise obj = null;
+		try {
+			obj = repo.findOne(id);
+		}catch(Exception e) {
 			throw new ObjectNotFoundException("Enterprise id "+ id + " not found! " + Enterprise.class.getName());
-		
+		}
 		return obj;
 	}
 
@@ -72,8 +75,16 @@ public class ServiceEnterprise {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Enterprise fromDTO(EnterpriseDTO obj) {
-		return new Enterprise(obj.getId(), obj.getName(), null, obj.getBusinessOwner());
+	public Enterprise fromNewDTO(EnterpriseNewDTO objNewDTO) {
+		return new Enterprise(null, objNewDTO.getName(), objNewDTO.getCnpj(), objNewDTO.getBusinessOwner());
+	}
+	
+	public Enterprise fromDTO(EnterpriseDTO objDTO, Integer id) {
+		Enterprise obj = findById(id);
+		obj.setName(objDTO.getName());
+		obj.setBusinessOwner(objDTO.getBusinessOwner());
+		obj.setEmployees(objDTO.getEmployees());
+		return obj;
 	}
 	
 	private void updateData(Enterprise newEnterprise, Enterprise enterprise) {

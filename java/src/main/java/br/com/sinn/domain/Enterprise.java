@@ -15,11 +15,8 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.sinn.services.validation.EnterpriseInsert;
-
 
 @Entity(name="TB_EMPRESA")
-@EnterpriseInsert
 public class Enterprise implements Serializable{
 
 	private static final long serialVersionUID = 1L;
